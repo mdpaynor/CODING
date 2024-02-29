@@ -1,0 +1,107 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+struct Student {
+    string firstName;
+    string lastName;
+    string year;
+    string section;
+    string course;
+};
+
+void collectStudentInfo(Student& student) {
+    system("CLS");
+    cout << "\t\t-----------------\n";
+    cout << "\t\tFirst name:";
+    cin >> student.firstName;
+
+    cout << "\t\tLast name:";
+    cin >> student.lastName;
+
+    cout << "\t\tYear:";
+    cin >> student.year;
+
+    cout << "\t\tSection:";
+    cin >> student.section;
+
+    cout << "\t\tCourse:";
+    cin >> student.course;
+}
+
+void displayStudentInfo(const Student& student) {
+    cout << "\t\t-----------------\n";
+    cout << "\n\t\tStudent Information:\n";
+    cout << "\t\t-----------------\n";
+    cout << "\t\tFirst name:" << student.firstName << "\n";
+    cout << "\t\tLast name:" << student.lastName << "\n";
+    cout << "\t\tYear:" << student.year << "\n";
+    cout << "\t\tSection:" << student.section << "\n";
+    cout << "\t\tCourse:" << student.course << "\n";
+}
+
+void displayMenu() {
+    system("cls");
+
+    cout << "\n\t\tMain Menu\n";
+    cout << "\t\t---------------\n";
+    cout << "\t\t1. Add Students\n";
+    cout << "\t\t2. Show Students\n";
+    cout << "\t\t3. Exit\n";
+    cout << "\t\tEnter your choice: ";
+}
+
+int main() {
+    const int MAX_STUDENTS = 100;
+    Student students[MAX_STUDENTS];
+    int numStudents = 0;
+    int choice;
+
+
+    while (true) {
+        displayMenu();
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            if (numStudents == MAX_STUDENTS) {
+                cout << "Maximum student limit reached.\n";
+            }
+            else {
+                collectStudentInfo(students[numStudents]);
+                numStudents++;
+            }
+            break;
+        case 2:
+            if (numStudents == 0) {
+                cout << "No students added yet.\n";
+            }
+            else {
+                int startIndex = 0;
+                while (startIndex < numStudents) {
+                    system("cls");
+                    cout << "\n\t\tStudent Information:\n";
+                    cout << "\t\t-------------------\n";
+                    for (int i = startIndex; i < min(startIndex + 5, numStudents); i++) {
+                        displayStudentInfo(students[i]);
+                    }
+                    startIndex += 5;
+                    if (startIndex < numStudents) {
+                        cout << "\nPress Enter to continue to next page...";
+                        cin.ignore();
+                        cin.get();
+                    }
+                }
+            }
+            break;
+        case 3:
+            cout << "Exiting program.\n";
+            return 0;
+        default:
+            cout << "Invalid choice. Please enter 1, 2, or 3.\n";
+        }
+    }
+
+    return 0;
+}
